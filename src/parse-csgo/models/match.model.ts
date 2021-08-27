@@ -1,4 +1,4 @@
-export class Matches {
+export class ModelMatch {
 	id: string
 
 	name: string

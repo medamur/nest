@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { TypegooseModule } from 'nestjs-typegoose'
-import { Player } from './models/player.model'
-import { Team } from './models/team.model'
+import { ModelPlayer } from './models/player.model'
+import { ModelTeam } from './models/team.model'
 import { ParseCsgoController } from './parse-csgo.controller'
 import { ParseCsgoService } from './parse-csgo.service'
 
@@ -10,13 +10,13 @@ import { ParseCsgoService } from './parse-csgo.service'
 	imports: [
 		TypegooseModule.forFeature([
 			{
-				typegooseClass: Player,
+				typegooseClass: ModelPlayer,
 				schemaOptions: {
 					collection: 'Player'
 				}
 			},
 			{
-				typegooseClass: Team,
+				typegooseClass: ModelTeam,
 				schemaOptions: {
 					collection: 'Team'
 				}

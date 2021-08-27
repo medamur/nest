@@ -1,5 +1,4 @@
-
-export class ModelTeam {
+export class SaveTeamDto {
 	id: string
 
 	name: string

@@ -1,13 +1,13 @@
-export class Event {
-  id: string
+export class ModelEvent {
+	id: string
 
-  name: string
+	name: string
 
-  matches: string[]
+	matches: string[]
 
-  teams: string[]
+	teams: string[]
 
-  fond: string
+	fond: string
 
-  winner: string
+	winner: string
 }

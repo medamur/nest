@@ -1,28 +1,28 @@
 import { prop, Ref } from '@typegoose/typegoose'
 import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses'
-import { Team } from './team.model'
+import { ModelTeam } from './team.model'
 
-export class TeamPlayer {
+export class ModelTeamPlayer {
 	@prop()
 	dateStart: string
 
 	@prop()
 	dateEnd: string
 
-	@prop({ ref: () => Team })
-	team: Ref<Team>
+	@prop({ ref: () => ModelTeam })
+	team: Ref<ModelTeam>
 }
 
-export interface Player extends Base {}
-export class Player extends TimeStamps {
+export interface ModelPlayer extends Base {}
+export class ModelPlayer extends TimeStamps {
 	@prop()
 	name: string
 
 	@prop({ unique: true, required: true })
 	nik: string
 
-	@prop({ type: () => [TeamPlayer] })
-	teams: TeamPlayer[]
+	@prop({ type: () => [ModelTeamPlayer], _id: false })
+	teams: ModelTeamPlayer[]
 
 	@prop()
 	ranking: string
