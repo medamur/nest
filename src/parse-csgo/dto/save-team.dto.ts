@@ -3,11 +3,7 @@ export class SaveTeamDto {
 
 	name: string
 
-	awardsEvents: string[]
-
-	currentPlayers: string[]
-
-	players: string[]
+	currentPlayers: []
 
 	ranking: string
 }

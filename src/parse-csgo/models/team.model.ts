@@ -1,14 +1,15 @@
+import { prop, Ref } from '@typegoose/typegoose'
+import { ModelPlayer } from './player.model'
+import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 
-export class ModelTeam {
-	id: string
-
+export interface ModelTeam extends Base {}
+export class ModelTeam extends TimeStamps {
+	@prop({ unique: true, required: true })
 	name: string
 
-	awardsEvents: string[]
+	@prop({ ref: () => ModelPlayer })
+	currentPlayers: Ref<ModelPlayer>[]
 
-	currentPlayers: string[]
-
-	players: string[]
-
+	@prop()
 	ranking: string
 }
