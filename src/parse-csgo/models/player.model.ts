@@ -10,7 +10,7 @@ export class ModelTeamPlayer {
 	dateEnd: string
 
 	@prop({ ref: () => ModelTeam })
-	team: Ref<ModelTeam>
+	teamId: Ref<ModelTeam>
 }
 
 export interface ModelPlayer extends Base {}

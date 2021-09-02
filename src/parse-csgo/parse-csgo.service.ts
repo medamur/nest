@@ -5,6 +5,7 @@ import { IObjectWithTypegooseName, ModelType } from '@typegoose/typegoose/lib/ty
 import { InjectModel } from 'nestjs-typegoose'
 import { SaveTeamDto } from './dto/save-team.dto'
 import { ModelTeam } from './models/team.model'
+import { Error } from 'mongoose'
 
 @Injectable()
 export class ParseCsgoService {
@@ -17,7 +18,7 @@ export class ParseCsgoService {
 		return this.player.create(dto)
 	}
 
-	async saveTeam(dto: SaveTeamDto): Promise<ModelTeam> {
+	async saveTeam(dto: SaveTeamDto & IObjectWithTypegooseName): Promise<ModelTeam> {
 		return this.team.create(dto)
 	}
 
@@ -34,29 +35,67 @@ export class ParseCsgoService {
 						foreignField: '_id',
 						as: 'currentPlayers'
 					}
-				},
-				{
-					$limit: 1
 				}
 			])
 			.exec()
 	}
 
-	async getPlayerByNik(nik: string): Promise<ModelPlayer | null> {
-		return this.player
-			.aggregate([
-				{
-					$unwind: { includeArrayIndex: [0] }
-				},
-				{
-					$lookup: {
-						from: 'Team',
-						localField: 'teams.team',
-						foreignField: '_id',
-						as: 'teams.team'
+	async getPlayerByNik(nik: string): Promise<ModelPlayer[]> {
+		return this.player.aggregate([
+			{
+				$match: {
+					nik
+				}
+			},
+			{
+				$unwind: {
+					path: '$teams'
+				}
+			},
+			{
+				$lookup: {
+					from: 'Team',
+					localField: 'teams.teamId',
+					foreignField: '_id',
+					as: 'teams.teamInfo'
+				}
+			},
+			{
+				$unwind: {
+					path: '$teams.teamInfo'
+				}
+			},
+			{
+				$group: {
+					_id: '$_id',
+					teams: {
+						$push: '$teams'
 					}
 				}
-			])
-			.exec()
+			},
+			{
+				$lookup: {
+					from: 'Player',
+					localField: '_id',
+					foreignField: '_id',
+					as: 'playerDetail'
+				}
+			},
+			{
+				$unwind: {
+					path: '$playerDetail'
+				}
+			},
+			{
+				$addFields: {
+					'playerDetail.teams': '$teams'
+				}
+			},
+			{
+				$replaceRoot: {
+					newRoot: '$playerDetail'
+				}
+			}
+		])
 	}
 }

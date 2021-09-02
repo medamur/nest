@@ -9,7 +9,7 @@ export class SavePlayerDto {
 
 			dateEnd: string
 
-			team: string
+			teamId: string
 		}
 	]
 
