@@ -4,6 +4,7 @@ import { ModelPlayer } from './models/player.model'
 import { ModelTeam } from './models/team.model'
 import { ParseCsgoController } from './parse-csgo.controller'
 import { ParseCsgoService } from './parse-csgo.service'
+import { ModelEvent } from './models/event.model'
 
 @Module({
 	controllers: [ParseCsgoController],
@@ -19,6 +20,12 @@ import { ParseCsgoService } from './parse-csgo.service'
 				typegooseClass: ModelTeam,
 				schemaOptions: {
 					collection: 'Team'
+				}
+			},
+			{
+				typegooseClass: ModelEvent,
+				schemaOptions: {
+					collection: 'Event'
 				}
 			}
 		])

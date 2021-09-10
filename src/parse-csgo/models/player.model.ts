@@ -1,19 +1,53 @@
-import { prop, Ref } from '@typegoose/typegoose'
+import { modelOptions, prop, Severity } from '@typegoose/typegoose'
 import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses'
-import { ModelTeam } from './team.model'
 
-export class ModelTeamPlayer {
+export class ESlPlayer {
 	@prop()
-	dateStart: string
+	id: string
 
 	@prop()
-	dateEnd: string
+	name: string
 
-	@prop({ ref: () => ModelTeam })
-	teamId: Ref<ModelTeam>
+	@prop()
+	country: string
+
+	@prop()
+	points: string
+
+	@prop()
+	points_aged: string
+
+	@prop()
+	deleted: string
+
+	@prop()
+	rank: string
+
+	@prop()
+	ranktendency: string
+
+	@prop()
+	prodbkey: string
+
+	@prop()
+	photo_body: string
+
+	@prop()
+	photo_square: string
+
+	@prop()
+	photo_portrait: string
+
+	@prop()
+	team: string
+
+	@prop()
+	events?: string[] | null
 }
 
 export interface ModelPlayer extends Base {}
+
+@modelOptions({ options: { allowMixed: Severity.ALLOW } })
 export class ModelPlayer extends TimeStamps {
 	@prop()
 	name: string
@@ -21,9 +55,9 @@ export class ModelPlayer extends TimeStamps {
 	@prop({ unique: true, required: true })
 	nik: string
 
-	@prop({ type: () => [ModelTeamPlayer], _id: false })
-	teams: ModelTeamPlayer[]
+	@prop()
+	country: string
 
 	@prop()
-	ranking: string
+	esl: ESlPlayer
 }
